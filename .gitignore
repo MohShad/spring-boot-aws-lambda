@@ -1,5 +1,16 @@
 # Default ignored files
+
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
 /shelf/
 /workspace.xml
-/target
+target/
 .aws-sam
+
+### IntelliJ IDEA ###
+.idea/*
+*.iws
+*.iml
+*.ipr

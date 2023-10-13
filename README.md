@@ -1,5 +1,5 @@
-# spring-boot-aws-lambda serverless API
-The spring-boot-aws-lambda project, created with [`aws-serverless-java-container`](https://github.com/awslabs/aws-serverless-java-container).
+# aws-client-service serverless API
+The aws-client-service project, created with [`aws-serverless-java-container`](https://github.com/awslabs/aws-serverless-java-container).
 
 The starter project defines a simple `/ping` resource that can accept `GET` requests with its tests.
 
@@ -13,8 +13,8 @@ The project folder also includes a `template.yml` file. You can use this [SAM](h
 ## Building the project
 You can use the SAM CLI to quickly build the project
 ```bash
-$ mvn archetype:generate -DartifactId=spring-boot-aws-lambda -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.0.0-M2 -DgroupId=org.example -Dversion=1.0-SNAPSHOT -Dinteractive=false
-$ cd spring-boot-aws-lambda
+$ mvn archetype:generate -DartifactId=aws-client-service -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.0.0-M2 -DgroupId=org.example -Dversion=1.0-SNAPSHOT -Dinteractive=false
+$ cd aws-client-service
 $ sam build
 Building resource 'SpringBootAwsLambdaFunction'
 Running JavaGradleWorkflow:GradleBuild
