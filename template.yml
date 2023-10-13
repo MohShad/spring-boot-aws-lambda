@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: AWS Serverless Spring Boot 2 API - org.example::spring-boot-aws-lambda
+Description: AWS Serverless Spring Boot 3 API - com.mohshad::spring-boot-aws-lambda
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
@@ -9,22 +9,25 @@ Resources:
   SpringBootAwsLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: org.example.StreamLambdaHandler::handleRequest
+      Handler: com.mohshad.StreamLambdaHandler::handleRequest
       Runtime: java17
       CodeUri: .
       MemorySize: 512
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 30
       Events:
-        ProxyResource:
+        PostClient:
           Type: Api
           Properties:
-            Path: /{proxy+}
-            Method: any
-
-Outputs:
-  SpringBootAwsLambdaApi:
-    Description: URL for application
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
-    Export:
-      Name: SpringBootAwsLambdaApi
+            Path: /client
+            Method: post
+        GetAllClients:
+          Type: Api
+          Properties:
+            Path: /client
+            Method: get
+        GetClient:
+          Type: Api
+          Properties:
+            Path: /client/{id}
+            Method: get
