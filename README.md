@@ -11,6 +11,9 @@ The project folder also includes a `template.yml` file. You can use this [SAM](h
 * [AWS Account](https://console.aws.amazon.com/)
 * [Gradle](https://gradle.org/) or [Maven](https://maven.apache.org/)
 
+**OBS.**: In this project, we are using H2 database, which is an in memory database. AWS Lambda will generally terminate functions after 45–60 minutes of inactivity and close the connection with database.
+After that, we lose our data in database, because H2 is an in memory database. you can use one of the RDS from AWS console.
+
 ## Building the project
 You can create the base project with command line arguments or via Intellij
 
