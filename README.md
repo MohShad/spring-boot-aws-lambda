@@ -1,82 +1,91 @@
 # aws-client-service serverless API
+
+## Introduction
+We are going to deploy spring-boot lambda service application in AWS Lambda.
+This is a simple rest-api, with 3 services. create, getAll and getById.
+
 The aws-client-service project, created with [`aws-serverless-java-container`](https://github.com/awslabs/aws-serverless-java-container).
-
-The starter project defines a simple `/ping` resource that can accept `GET` requests with its tests.
-
 The project folder also includes a `template.yml` file. You can use this [SAM](https://github.com/awslabs/serverless-application-model) file to deploy the project to AWS Lambda and Amazon API Gateway or test in local with the [SAM CLI](https://github.com/awslabs/aws-sam-cli). 
 
 ## Pre-requisites
-* [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [AWS Account](https://console.aws.amazon.com/)
 * [Gradle](https://gradle.org/) or [Maven](https://maven.apache.org/)
 
 ## Building the project
-You can use the SAM CLI to quickly build the project
+You can create the base project with command line arguments or via Intellij
+
+Command line:
 ```bash
 $ mvn archetype:generate -DartifactId=aws-client-service -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.0.0-M2 -DgroupId=org.example -Dversion=1.0-SNAPSHOT -Dinteractive=false
-$ cd aws-client-service
-$ sam build
-Building resource 'SpringBootAwsLambdaFunction'
-Running JavaGradleWorkflow:GradleBuild
-Running JavaGradleWorkflow:CopyArtifacts
-
-Build Succeeded
-
-Built Artifacts  : .aws-sam/build
-Built Template   : .aws-sam/build/template.yaml
-
-Commands you can use next
-=========================
-[*] Invoke Function: sam local invoke
-[*] Deploy: sam deploy --guided
 ```
+IntelliJ:
 
-## Testing locally with the SAM CLI
+![IntelliJ](screenshots/1.png)
 
-From the project root folder - where the `template.yml` file is located - start the API with the SAM CLI.
+The project structure:
 
+![IntelliJ](screenshots/2.png)
+
+After download the project, run the command:
 ```bash
-$ sam local start-api
-
-...
-Mounting com.amazonaws.serverless.archetypes.StreamLambdaHandler::handleRequest (java11) at http://127.0.0.1:3000/{proxy+} [OPTIONS GET HEAD POST PUT DELETE PATCH]
-...
+$ mvn clean package
 ```
 
-Using a new shell, you can send a test ping request to your API:
+Now we should create our lambda function in AWS console.
+Go to AWS console>AWS Lambda function>Create function, and save it.
 
-```bash
-$ curl -s http://127.0.0.1:3000/ping | python -m json.tool
+![Create Lambda Function](screenshots/3.png)
 
-{
-    "pong": "Hello, World!"
-}
-``` 
+![Create Lambda Function](screenshots/4.png)
 
-## Deploying to AWS
-To deploy the application in your AWS account, you can use the SAM CLI's guided deployment process and follow the instructions on the screen
+Upload your project package(/target/*.zip), before you create it with "mvn clean package".
 
-```
-$ sam deploy --guided
-```
+![Upload the package .zip](screenshots/5.png)
 
-Once the deployment is completed, the SAM CLI will print out the stack's outputs, including the new application URL. You can use `curl` or a web browser to make a call to the URL
+Edit your runtime settings and change the handler classPath.
 
-```
-...
--------------------------------------------------------------------------------------------------------------
-OutputKey-Description                        OutputValue
--------------------------------------------------------------------------------------------------------------
-SpringBootAwsLambdaApi - URL for application            https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/pets
--------------------------------------------------------------------------------------------------------------
-```
+![Runtime settings](screenshots/6.png)
+![Change the handler path](screenshots/7.png)
 
-Copy the `OutputValue` into a browser or use curl to test your first request:
+Let's create an API Gateway.
+Go to AWS console>API Gateway>Create API>REST API, and save it.
 
-```bash
-$ curl -s https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping | python -m json.tool
+Create REST API:
 
-{
-    "pong": "Hello, World!"
-}
-```
+![Create API](screenshots/8.png)
+
+Create the resources:
+
+![Create Resources](screenshots/9.png)
+![Create Resources](screenshots/10.png)
+
+Create methods(POST):
+
+![Create Method](screenshots/11.png)
+
+Let's test our POST method:
+
+![Test](screenshots/12.png)
+
+![Test](screenshots/13.png)
+
+![Test](screenshots/14.png)
+
+The response status is 201, the client created successfully.
+
+Once you create all the resources and methods you need, you can deploy the API Gateway.
+
+![](screenshots/15.png)
+
+
+You can test your lambda function with postman.
+Go to AWS console>API Gateway>APIs>ClientServiceProxy>Stages
+Get the url, and call it with postman:
+
+![Postman](screenshots/16.png)
+
+![Postman](screenshots/17.png)
+
+![Postman](screenshots/18.png)
+
+That's All Folks!
